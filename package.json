@@ -1,0 +1,14 @@
+{
+  "name": "game_of_life",
+  "version": "1.0.0",
+  "description": "FROM WIKIPEDIA ENTRY...",
+  "main": "game.js",
+  "scripts": {
+    "test": "mocha tests"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^5.0.0"
+  }
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <link rel="stylesheet" href="./style.css">
+
+  <title>Game of Life</title>
+</head>
+<body>
+
+  <header>
+    <h1 id="title">Game of Life</h1>
+  </header>
+
+
+  <main>
+    <section id="instructions">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, temporibus sequi deserunt quibusdam laborum adipisci optio, voluptas porro dolores neque soluta illum numquam modi totam.</p>
+    </section>
+
+    <section id="controls">
+          <label for="cycles">1. Set number of cycles or leave as '0' for infinite game</label>
+          <input type="number" id="cycles" name="cycles" value="0">
+
+          <p>2. Set starting life by clicking on the grid below</p>
+
+          <label for="start">3. Press 'Start Game'</label>
+          <input type="button" id="start" name="start" value="Start Game of Life">
+
+          <input type="button" id="pause" name="pause" value="Pause game">
+          <input type="button" id="reset" name="reset" value="Reset game">
+        </form>
+    </section>
+
+    <section id="messageBar"></section>
+
+    <section id='world-wrapper'>
+      <div id="world">THere should be a grid here. If not, there are problems!</div>
+    </section>
+  </main>
+
+
+  <footer>
+    <small id="footer">Game of Life</small>
+  </footer>
+</body>
+<script type="text/javascript" src="./game.js" />
+</script>
+</html>
