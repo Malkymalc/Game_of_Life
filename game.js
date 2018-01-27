@@ -20,18 +20,18 @@ function getNeighbourGrid(currentGrid){
         var neighbours = 0;
         if (rowIndex != 0){
           //count live neighbours above if cell not in top row
-          if ( grid[rowIndex-1][cellIndex-1])  {neighbour +=1 }
-          if ( grid[rowIndex-1][cellIndex] )   {neighbour +=1 }
-          if ( grid[rowIndex-1][cellIndex+1])  {neighbour +=1 }
+          if ( grid[rowIndex-1][cellIndex-1])  {neighbours +=1 }
+          if ( grid[rowIndex-1][cellIndex] )   {neighbours +=1 }
+          if ( grid[rowIndex-1][cellIndex+1])  {neighbours +=1 }
         }
-        // count neighbours either side
-        if ( grid[rowIndex][cellIndex-1] )   {neighbour +=1 }
-        if ( grid[rowIndex][cellIndex+1] )   {neighbour +=1 }
-        if (rowIndex != 99){
-          // count live neighbours below if cell not in bottom row
-          if ( grid[rowIndex+1][cellIndex-1])  {neighbour +=1 }
-          if ( grid[rowIndex+1][cellIndex] )   {neighbour +=1 }
-          if ( grid[rowIndex+1][cellIndex+1])  {neighbour +=1 }
+        // count neighbourss either side
+        if ( grid[rowIndex][cellIndex-1] )   {neighbours +=1 }
+        if ( grid[rowIndex][cellIndex+1] )   {neighbours +=1 }
+        if (rowIndex != (grid.length-1)){
+          // count live neighbourss below if cell not in bottom row
+          if ( grid[rowIndex+1][cellIndex-1])  {neighbours +=1 }
+          if ( grid[rowIndex+1][cellIndex] )   {neighbours +=1 }
+          if ( grid[rowIndex+1][cellIndex+1])  {neighbours +=1 }
         }
         return neighbours;
     });
@@ -88,19 +88,19 @@ function getNewGrid(currentGrid) {
 // };
 
 // ========= INPUT/EVENTS  ========= //
-
-const cellOnClick = () => {
-  pauseButtonOnClick();
-  updateGrid(grid);
-};
-
-const pauseButtonOnClick = () => play = play ? false : true;
-
-const resetButtonOnClick = () => {
-  pauseButtonOnClick();
-  grid = getBlankGrid();
-  updateGrid(grid);
-}
+//
+// const cellOnClick = () => {
+//   pauseButtonOnClick();
+//   updateGrid(grid);
+// };
+//
+// const pauseButtonOnClick = () => play = play ? false : true;
+//
+// const resetButtonOnClick = () => {
+//   pauseButtonOnClick();
+//   grid = getBlankGrid();
+//   updateGrid(grid);
+// }
 
 // ========= OUTPUT ========= //
 // function renderDOMGrid(grid){
@@ -144,10 +144,10 @@ const resetButtonOnClick = () => {
 // }
 
 module.exports = {
-  getBlankGrid
-  // getNeighbourGrid,
-  // calcNewGrid,
-  // getNewGrid,
+  getBlankGrid,
+  getNeighbourGrid,
+  calcNewGrid,
+  getNewGrid,
   // runGame
 }
 

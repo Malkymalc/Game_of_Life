@@ -30,18 +30,54 @@ describe('Game', function(){
     assert.strictEqual(smallGrid[1][3],false);
     assert.strictEqual(smallGrid[3][1],false);
   });
-  //
-  // it('can return neighbour grid based on current grid',function(){
-  //
-  // });
-  //
-  // it('can create new grid based on neighbour grid and current grid',function(){
-  //
-  //
-  // });
-  //
-  // it('can take in current grid and return new grid',function(){
-  //
-  // });
+
+  it('can return neighbour grid based on current grid',function(){
+    const smallGrid = game.getBlankGrid(5,5);
+    smallGrid[0][0] = true;
+    smallGrid[0][2] = true;
+    smallGrid[0][4] = true
+    smallGrid[2][0] = true;
+    smallGrid[2][2] = true;
+    smallGrid[2][4] = true;
+    smallGrid[4][0] = true;
+    smallGrid[4][2] = true;
+    smallGrid[4][3] = true;
+    smallGrid[4][4] = true;
+    const result = game.getNeighbourGrid(smallGrid);
+    console.log(result);
+  });
+
+  it('can create new grid based on neighbour grid and current grid',function(){
+    const smallGrid = game.getBlankGrid(5,5);
+    smallGrid[0][0] = true;
+    smallGrid[0][2] = true;
+    smallGrid[0][4] = true
+    smallGrid[2][0] = true;
+    smallGrid[2][2] = true;
+    smallGrid[2][4] = true;
+    smallGrid[4][0] = true;
+    smallGrid[4][2] = true;
+    smallGrid[4][3] = true;
+    smallGrid[4][4] = true;
+    const neighbourGrid = game.getNeighbourGrid(smallGrid);
+    const newGrid = game.calcNewGrid(smallGrid,neighbourGrid);
+    console.log(newGrid);
+  });
+
+  it('can take in current grid and return new grid',function(){
+    const smallGrid = game.getBlankGrid(5,5);
+    smallGrid[0][0] = true;
+    smallGrid[0][2] = true;
+    smallGrid[0][4] = true
+    smallGrid[2][0] = true;
+    smallGrid[2][2] = true;
+    smallGrid[2][4] = true;
+    smallGrid[4][0] = true;
+    smallGrid[4][2] = true;
+    smallGrid[4][3] = true;
+    smallGrid[4][4] = true;
+    const autoedNewGrid = game.getNewGrid(smallGrid);
+    console.log(autoedNewGrid);
+  });
 
 });

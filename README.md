@@ -1,3 +1,22 @@
+TODO
+1. Test rest of grid methods.
+2. Test grid render method for blank grid.
+3. Work on html/css of page if necessary.
+
+4. a. Test/work on game play logic in dev tools with basic cases.
+4. b. Try to break game - fix issues if needed.
+4. c. Refine CSS.
+
+5. a. Review code with view to DRYing it up.
+5. b. Look into deployment.
+
+6. Work on Local Storage.
+7. Work up feature list.
+8. Look at WebGL / 3D grid.
+9. Look at Web Audio.
+
+
+
 FROM WIKIPEDIA ENTRY...
 
 // The universe of the Game of Life is an infinite two-dimensional orthogonal grid of square cells, each of which is in one of two possible states, alive or dead, or "populated" or "unpopulated". Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:
