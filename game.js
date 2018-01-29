@@ -1,7 +1,7 @@
 
 
 /*---------------------FUNCTIONS---------------------*/
-function getBlankGrid(xLength = 50, yLength = 50) {
+function getBlankGrid(xLength = 25, yLength = 25) {
     const rowMaker = () => {
         const cellMaker = () => false;
         const row = Array.from({length: xLength},cellMaker);
@@ -45,7 +45,8 @@ function calcNewGrid(currentGrid, neighbourGrid) {
       else if (neighbours === 2 && alive) { return true; }
       else if (neighbours === 3 && alive) { return true; }
       else if (neighbours === 3 && !alive) { return true; }
-      else if (neighbours > 3) { return false; }
+      else if (neighbours === 2 && !alive) { return true; } //remove this
+      else if (neighbours > 3) { return false; }            // change this?
       else { return false; }
     });
   });
@@ -63,7 +64,18 @@ function togglePlay(){
   console.log(`play at end of togglePlay ${play}`);
 }
 
-function runGame(cycles = 100){
+function getFlatGrid(){
+  return flatGrid = [].concat(...grid);
+}
+
+function cellCount(){
+  const flatGrid = getFlatGrid();
+  return result = flatGrid.reduce((acc,cell) => {
+    return cell ? acc += 1 : acc;
+  }, 0);
+}
+
+function runGame(cycles = 50){
   if(!play){
     togglePlay();
     let cycleCount = cycles;
@@ -71,10 +83,10 @@ function runGame(cycles = 100){
     let id = setInterval(function(){
       if(cycleCount>0 && play === true){
           console.log(`Hello ${cycleCount}`);
+          console.log(`${cellCount()} cells alive`);
+          console.log(`${( cellCount()*100 / (grid[0].length * grid.length) )} % of cells alive`);
           updateDOMGrid();
-          console.log(`grid is ${grid}`);
           grid = getNewGrid();
-          console.log(`grid is update to ${grid}`);
           // messageBar.innerHTML = `Cycle ${cycleCount} of ${cycles}`;
           cycleCount -= 1;
       } else {

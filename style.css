@@ -17,7 +17,7 @@
   text-align: center;
   background: black;
   border: 2.5vw solid green;
-  grid-template-columns: repeat(50, 1fr);
+  grid-template-columns: repeat(25, 1fr);
   grid-gap: 0.5vmin;
   padding: 1vmin;
 }
@@ -29,6 +29,8 @@
   /* width: 0.7vmin;
   height: 0.7vmin; */
 }
+
+
 /* ===== hide checkbox input element ===== */
   .cell__input {
     position: absolute;
@@ -48,6 +50,10 @@
   .cell__input:checked + .cell__label {
     background: white;
     border-radius: 1px;
+  }
+
+  [for="checkbox24-24"], [for="checkbox24-25"], [for="checkbox25-24"], [for="checkbox25-25"] {
+    background: red;
   }
 
 footer {
