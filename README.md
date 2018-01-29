@@ -1,7 +1,7 @@
 TODO
 [1. DONE] Test rest of grid methods.
 [2. DONE] Test grid render method for blank grid.
-3. Work on html/css of page if necessary.
+[3. DONE] Work on html/css of page if necessary.
 
 4. a. Test/work on game play logic in dev tools with basic cases.
 4. b. Try to break game - fix issues if needed.

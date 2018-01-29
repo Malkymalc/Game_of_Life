@@ -1,8 +1,6 @@
 
 
 /*---------------------FUNCTIONS---------------------*/
-// 1. Creates and returns an array of arrays to represent a grid (array of rows)
-// , each entry a cell, and all values bools representing alive/dead state of cell.
 function getBlankGrid(xLength = 2,yLength = 2) {
     const rowMaker = () => {
         const cellMaker = () => false;
@@ -12,8 +10,7 @@ function getBlankGrid(xLength = 2,yLength = 2) {
     const blankGrid = Array.from({length: yLength}, rowMaker);
     return blankGrid;
 }
-// 2. Counts the 'alive' neighbours of each cell, taking in the grid as argument
-// Returns an int for each cell in grid, number of alive neighbours.
+
 function getNeighbourGrid(currentGrid){
   neighbourGrid = currentGrid.map(function(row,rowIndex,grid){
     return row.map(function(cell, cellIndex, row){
@@ -39,8 +36,6 @@ function getNeighbourGrid(currentGrid){
   return neighbourGrid;
 }
 
-// 3. Takes in current array and it's matching neighbourNumber grid, and returns new grid,
-// with values (alive/dead) changed according to the number of neighbours, and live/dead state of cell.
 function calcNewGrid(currentGrid, neighbourGrid) {
   newGrid = currentGrid.map(function(row, rowNum, grid){
     return row.map(function(cell, cellNum, row){
@@ -57,58 +52,52 @@ function calcNewGrid(currentGrid, neighbourGrid) {
   return newGrid;
 }
 
-
 function getNewGrid(currentGrid) {
   let neighbourGrid = getNeighbourGrid(currentGrid);
   return calcNewGrid(currentGrid, neighbourGrid);
 }
 
-// Exports for unit testing
-// module.exports = {
-//   getBlankGrid,
-//   getNeighbourGrid,
-//   calcNewGrid,
-//   getNewGrid
-// }
 
-//: = references and mutates 'play' variable. = //
-//: = grabs 'cycles' variable from input element. = //
-//: = updates messageBar element. = //
 
-// function runGame(startGrid) {
-//   if(!play){
-//       let cycle = 1;
-//       let cycleLimit = document.getElementById('cycles').value;
-//       if (cycleLimit == 0){ cycleLimit = 60;}
-//       let currentGrid = startGrid;
-//       play = true;
-//       setInterval(() => {
-//           if (play && cycle <= cycleLimit){
-//             let newGrid = getNewGrid(currentGrid);
-//             updateGrid(newGrid);
-//             currentGrid = newGrid;
-//             messageBar.innerHTML = `Cycle: ${cycle}`;
-//             cycle++
-//           } else {return;}
-//       }, 1000);
-//       messageBar.innerHTML = "Game Complete";
-//   }
-// };
+: = references and mutates 'play' variable. = //
+: = grabs 'cycles' variable from input element. = //
+: = updates messageBar element. = //
+
+function runGame(startGrid) {
+  if(!play){
+      let cycle = 1;
+      let cycleLimit = document.getElementById('cycles').value;
+      if (cycleLimit == 0){ cycleLimit = 60;}
+      let currentGrid = startGrid;
+      play = true;
+      setInterval(() => {
+          if (play && cycle <= cycleLimit){
+            let newGrid = getNewGrid(currentGrid);
+            updateGrid(newGrid);
+            currentGrid = newGrid;
+            messageBar.innerHTML = `Cycle: ${cycle}`;
+            cycle++
+          } else {return;}
+      }, 1000);
+      messageBar.innerHTML = "Game Complete";
+  }
+};
 
 // ========= INPUT/EVENTS  ========= //
 
 const cellOnClick = (grid) => {
-  console.log(event);
-  pauseButtonOnClick();
+  play = play ? false : false;
   updateGrid(grid);
 };
 
-const pauseButtonOnClick = () => play = play ? false : false ; //true;
-
-const resetButtonOnClick = () => {
-  pauseButtonOnClick();
-  grid = getBlankGrid();
-  updateGrid(grid);
+// Updates data grid based on DOM grid state.
+function updateGrid(grid) {
+  grid.forEach(function(row, rowIndex, grid){
+    row.forEach(function(cell, cellIndex, row){
+      const domCell = document.getElementById(`checkbox${rowIndex}-${cellIndex}`);
+      cell = domCell.checked ? true : false;
+    });
+  });
 }
 
 // ========= OUTPUT ========= //
@@ -139,28 +128,13 @@ function renderDOMGrid(grid){
   world.appendChild(fragment);
 }
 
-//   const domGrid = grid.map(function(row, rowIndex, grid){
-//     return row.map(function(cell, cellIndex, row){
-//       return `<div id="${rowIndex}-${cellIndex}" class="cell>
-//                 <input type='checkbox'>
-//                 <button></button>
-//               </div>`
-//     });
-//   });
-//   const domGridString = [].concat(...domGrid).join();
-//   world.insertAdjacentHTML(afterbegining, domGridString);
-// }
-
-function updateGrid(grid) {
-  grid.forEach(function(row, rowIndex, grid){
+function updateDOMGrid(newGrid){
+  console.log('in update DOM grid');
+  console.log(newGrid);
+  newGrid.forEach(function(row, rowIndex, grid){
     row.forEach(function(cell, cellIndex, row){
-      // console.log(cell);
-      console.log(`cell in current grid was alive?: ${cell}`);
       const domCell = document.getElementById(`checkbox${rowIndex}-${cellIndex}`);
-      console.log(`DOM cell is checked? : `);
-      console.log(domCell.checked);
-      cell = domCell.checked ? true : false;
-      console.log(`Cell is now: ${cell}`);
+      domCell.checked = cell ? true : false;
     });
   });
 }
@@ -172,24 +146,36 @@ let play, grid, world, cells, start, pause, reset, messageBar;
 document.addEventListener("DOMContentLoaded", function() {
   let play = false;
   let grid = getBlankGrid();
-  console.log(grid);
   renderDOMGrid(grid);
-  // updateGrid(grid);
 
   const world = document.getElementById('world');
   const cellInputs = document.getElementsByClassName('cell__input');
   const start = document.getElementById('start');
   const pause = document.getElementById('pause');
   const reset = document.getElementById('reset');
-  const messageBar = document.getElementById('messageBar');
+  // const messageBar = document.getElementById('messageBar');
 
   [...cellInputs].forEach(cellInput => cellInput.addEventListener('click', function(){
     cellOnClick(grid);
   }));
-  // start.addEventListener('click', runGame(grid));
-  // pause.addEventListener('click', pauseButtonOnClick());
-  // reset.addEventListener('click', resetButtonOnClick());
+
+  start.addEventListener('click', function(){
+    runGame(grid);
+  });
+
+  pause.addEventListener('click', function(){
+    play = play ? false : true;
+  });
+
+  reset.addEventListener('click', function(){
+    play = play ? false : false;
+    const freshGrid = getBlankGrid();
+    console.log(freshGrid);
+    updateDOMGrid(freshGrid);
+  });
 });
+
+
 
 // ========= LOCAL STORAGE ========= //
 // function getSavedGrids(){
@@ -281,4 +267,17 @@ document.addEventListener("DOMContentLoaded", function() {
 //     });
 //   });
 //   return result;
+// }
+
+// ========= Alternative render method ========= //
+//   const domGrid = grid.map(function(row, rowIndex, grid){
+//     return row.map(function(cell, cellIndex, row){
+//       return `<div id="${rowIndex}-${cellIndex}" class="cell>
+//                 <input type='checkbox'>
+//                 <button></button>
+//               </div>`
+//     });
+//   });
+//   const domGridString = [].concat(...domGrid).join();
+//   world.insertAdjacentHTML(afterbegining, domGridString);
 // }
