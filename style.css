@@ -15,9 +15,9 @@
   height: 60vmin;
   margin: 0 auto;
   text-align: center;
-  background: red;
+  background: black;
   border: 2.5vw solid green;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(50, 1fr);
   grid-gap: 0.5vmin;
   padding: 1vmin;
 }
@@ -42,11 +42,11 @@
     border-radius: 50%;
     background: green;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.23s ease;
     /* opacity: 0.1; */
   }
   .cell__input:checked + .cell__label {
-    background: blue;
+    background: white;
     border-radius: 1px;
   }
 
