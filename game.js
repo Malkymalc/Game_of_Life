@@ -3,7 +3,7 @@
 /*---------------------FUNCTIONS---------------------*/
 // 1. Creates and returns an array of arrays to represent a grid (array of rows)
 // , each entry a cell, and all values bools representing alive/dead state of cell.
-function getBlankGrid(xLength = 25,yLength = 25) {
+function getBlankGrid(xLength = 2,yLength = 2) {
     const rowMaker = () => {
         const cellMaker = () => false;
         const row = Array.from({length: xLength},cellMaker);
@@ -97,9 +97,10 @@ function getNewGrid(currentGrid) {
 
 // ========= INPUT/EVENTS  ========= //
 
-const cellOnClick = () => {
+const cellOnClick = (grid) => {
+  console.log(event);
   pauseButtonOnClick();
-  // updateGrid(grid);
+  updateGrid(grid);
 };
 
 const pauseButtonOnClick = () => play = play ? false : false ; //true;
@@ -123,10 +124,14 @@ function renderDOMGrid(grid){
 
       const checkbox = document.createElement('input');
       checkbox.setAttribute('type','checkbox');
+      checkbox.setAttribute('id',`checkbox${rowIndex}-${cellIndex}`);
+      checkbox.setAttribute('class','cell__input');
       div.appendChild(checkbox);
 
-      const button = document.createElement('button')
-      div.appendChild(button)
+      const label = document.createElement('label');
+      label.setAttribute('for', `checkbox${rowIndex}-${cellIndex}`)
+      label.setAttribute('class','cell__label');
+      div.appendChild(label);
 
       fragment.appendChild(div);
     });
@@ -149,9 +154,13 @@ function renderDOMGrid(grid){
 function updateGrid(grid) {
   grid.forEach(function(row, rowIndex, grid){
     row.forEach(function(cell, cellIndex, row){
-      const alive = cell;
-      const domCell = document.getElementById(`${rowIndex}-${cellIndex}`);
-      domCell.checked = alive ? true : false;
+      // console.log(cell);
+      console.log(`cell in current grid was alive?: ${cell}`);
+      const domCell = document.getElementById(`checkbox${rowIndex}-${cellIndex}`);
+      console.log(`DOM cell is checked? : `);
+      console.log(domCell.checked);
+      cell = domCell.checked ? true : false;
+      console.log(`Cell is now: ${cell}`);
     });
   });
 }
@@ -168,13 +177,15 @@ document.addEventListener("DOMContentLoaded", function() {
   // updateGrid(grid);
 
   const world = document.getElementById('world');
-  const cells = document.getElementsByClassName('cell');
+  const cellInputs = document.getElementsByClassName('cell__input');
   const start = document.getElementById('start');
   const pause = document.getElementById('pause');
   const reset = document.getElementById('reset');
   const messageBar = document.getElementById('messageBar');
 
-  [...cells].forEach(cell => cell.addEventListener('click', cellOnClick()));
+  [...cellInputs].forEach(cellInput => cellInput.addEventListener('click', function(){
+    cellOnClick(grid);
+  }));
   // start.addEventListener('click', runGame(grid));
   // pause.addEventListener('click', pauseButtonOnClick());
   // reset.addEventListener('click', resetButtonOnClick());
