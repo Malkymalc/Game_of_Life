@@ -1,25 +1,55 @@
 
-.world-wrapper {
-  width: 80vmin;
+header {
+  margin: 0;
+  padding: 0;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 2vmin;
+  text-align: center;
+}
+
+main {
+  margin: 0;
+  padding: 0;
+}
+
+#instructions {
+  float: left;
+  width: 40%;
+  padding-top: 0;
+}
+
+#controls {
+  float: right;
+  width: 60%;
+}
+
+#messageBar {
+  clear:both;
+}
+
+#world-wrapper {
+  clear: both;
+  /* width: 80vmin;
   height: 80vmin;
   margin: 0,auto;
   text-align: center;
   padding: 2.5vw;
   background: red;
-  border: 2.5vw dashed red;
+  border: 2.5vw dashed red; */
 }
 
 #world {
   display: grid;
-  width: 60vmin;
-  height: 60vmin;
+  width: 70vmin;
+  height: 70vmin;
   margin: 0 auto;
   text-align: center;
-  background: black;
-  border: 2.5vw solid green;
-  grid-template-columns: repeat(25, 1fr);
+  background: hsla(0,0%,0%,1);
+  border-radius: 1vw;
+  /* border: 2.5vw solid green; */
+  grid-template-columns: repeat(50, 1fr);
   grid-gap: 0.5vmin;
-  padding: 1vmin;
+  padding: 0.5vmin;
 }
 
 /* ===== wrapper div for  cell ===== */
@@ -44,7 +74,7 @@
     border-radius: 50%;
     background: green;
     cursor: pointer;
-    transition: all 0.23s ease;
+    transition: all 0.3s ease;
     /* opacity: 0.1; */
   }
   .cell__input:checked + .cell__label {

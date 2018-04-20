@@ -1,7 +1,7 @@
 
 
 /*---------------------FUNCTIONS---------------------*/
-function getBlankGrid(xLength = 25, yLength = 25) {
+function getBlankGrid(xLength = 50, yLength = 50) {
     const rowMaker = () => {
         const cellMaker = () => false;
         const row = Array.from({length: xLength},cellMaker);
@@ -45,7 +45,8 @@ function calcNewGrid(currentGrid, neighbourGrid) {
       else if (neighbours === 2 && alive) { return true; }
       else if (neighbours === 3 && alive) { return true; }
       else if (neighbours === 3 && !alive) { return true; }
-      else if (neighbours === 2 && !alive) { return true; } //remove this
+      // else if (neighbours === 0 && !alive) { return true; }
+      else if (neighbours === 4 && !alive) { return true; } //remove this
       else if (neighbours > 3) { return false; }            // change this?
       else { return false; }
     });
@@ -59,9 +60,7 @@ function getNewGrid() {
 }
 
 function togglePlay(){
-  console.log(`play at start of togglePlay ${play}`);
   play = play ? false : true;
-  console.log(`play at end of togglePlay ${play}`);
 }
 
 function getFlatGrid(){
@@ -75,7 +74,7 @@ function cellCount(){
   }, 0);
 }
 
-function runGame(cycles = 50){
+function runGame(cycles = 100){
   if(!play){
     togglePlay();
     let cycleCount = cycles;
@@ -93,7 +92,7 @@ function runGame(cycles = 50){
           clearInterval(id);
           if(play) { togglePlay() };
         }
-    }, 250);
+    }, 300);
     // messageBar.innerHTML = "Game complete";
   }
 }
@@ -153,84 +152,108 @@ function updateDOMGrid(){
   });
 }
 
+function initDataGrid(){
+  grid = getBlankGrid();
+};
+
+function setPlayFalse(){
+  play = false;
+};
+
 let play, grid, world, cells, start, pause, reset, messageBar;
+
+//========= LOCAL STORAGE ========= //
+function getSavedGrids(){
+  return savedGrids = JSON.parse(localStorage.getItem('grids'));
+};
+
+function listSavedGrids(savedGrids) {
+  const fragment = document.createDocumentFragment();
+  savedGrids.forEach((grid,index) => {
+    const el = document.createElement('option');
+    const gridName = document.createTextNode(grid.name);
+    el.appendChild(gridName);
+    el.setAttribute('class','savedGrid');
+    el.setAttribute('value',index);
+    fragment.appendChild(el);
+  });
+  const dropdown = document.getElementById('select-grid');
+  dropdown.appendChild(fragment);
+}
+
+function loadGrid(){
+  const dropdown = document.getElementById('select-grid');
+  const index = dropdown.value;
+  grid = getSavedGrids()[index].grid;
+  updateDOMGrid();
+}
+
+function saveGrid() {
+  const saveName = document.getElementById('save-name').value;
+  const saveGrid = JSON.parse(JSON.stringify(grid));
+  const newGrid = {
+    name: saveName,
+    grid: saveGrid
+  };
+  let newGridsList = getSavedGrids().concat(newGrid);
+  localStorage.setItem('grids', JSON.stringify(newGridsList));
+  listSavedGrids(getSavedGrids());
+}
+
 // ========= GAMEPLAY ========= //
 
 document.addEventListener("DOMContentLoaded", function() {
-  function initDataGrid(){
-    console.log('setting initial grid');
-    grid = getBlankGrid();
+  if(localStorage.getItem('grids') === null) {
+    localStorage.setItem('grids','[]');
   };
-  initDataGrid();
-  function setPlayFalse(){ play = false; }
+  listSavedGrids(getSavedGrids());
+
   setPlayFalse();
+  initDataGrid();
   renderDOMGrid(grid);
 
-  const world = document.getElementById('world');
-  const cellInputs = document.getElementsByClassName('cell__input');
   const start = document.getElementById('start');
-  const pause = document.getElementById('pause');
-  const reset = document.getElementById('reset');
-  const messageBar = document.getElementById('messageBar');
-
-  [...cellInputs].forEach(cellInput => cellInput.addEventListener('click', function(){
-    console.log(`grid at start of click ${grid}`);
-    cellOnClick();
-    console.log(`grid at end of click ${grid}`);
-  }));
-
   start.addEventListener('click', function(){
-    // let cycle = 1;
-    // let cycleLimit = document.getElementById('cycles').value;
-    // if (cycleLimit == 0){ cycleLimit = 60;}
     runGame();
   });
 
+  const pause = document.getElementById('pause');
   pause.addEventListener('click', function(){
     togglePlay();
   });
 
+  const reset = document.getElementById('reset');
   reset.addEventListener('click', function(){
     play = play ? false : false;
     const freshGrid = getBlankGrid();
     updateDOMGrid(freshGrid);
   });
+
+  const cellInputs = document.getElementsByClassName('cell__input');
+  [...cellInputs].forEach(cellInput => cellInput.addEventListener('click', function(){ cellOnClick(); } ));
+
+  const loadBtn = document.getElementById('load-grid');
+  loadBtn.addEventListener('click',loadGrid);
+
+  const saveBtn = document.getElementById('save-btn');
+  saveBtn.addEventListener('click', saveGrid);
+
 });
-
-// ========= LOCAL STORAGE ========= //
-// function getSavedGrids(){
-//   return savedGrids = JSON.parse(localStorage.getItem('grids'));
-//   }
-//
-// function listSavedGrids(savedGrids) {
-//   const fragment = document.createDocumentFragment();
-//   savedGrids.forEach(grid => {
-//     const el = document.createElement('li');
-//     el.setContent(grid.name);
-//     el.setAttribute('class','savedGrid');
-//     fragment.appendChild(el);
-//   });
-//   savedGridsList.appendChild(fragment);
-// }
-//
-// const savedGrids = getSavedGrids();
-// listSavedGrids(savedGrids);
-//
-// function saveGrid(name, grid) {
-//   newGrid = {
-//     name,
-//     grid,
-//   }
-//   let newGridsList = getSavedGrids().push(newGrid);
-//   localStorage.setItem('grids', JSON.stringify(newGridsList));
-// }
-
 
 
 // ========= AUDIO STUFF ========= //
+
+
+
+
+
+
+
+
+
+
+
 // get strings
-
-
 
 // (25*4)*100 = 400 8 digit decimals
 //
@@ -241,11 +264,15 @@ document.addEventListener("DOMContentLoaded", function() {
 // //
 // const decimal = parseInt(binary,2);
 //
+
+
 // ========= WORKSHOP ========= //
 
 //-->  Time and Colour HSL(36*10);
 
 // 2D - callback() has reference to
+
+
 
 // ========= EACH ========= //
 // function each2D(grid,callback) {
@@ -301,3 +328,7 @@ document.addEventListener("DOMContentLoaded", function() {
 //   const domGridString = [].concat(...domGrid).join();
 //   world.insertAdjacentHTML(afterbegining, domGridString);
 // }
+
+
+
+So, with his game of life, you can do cool things like make glider guns. BUT what I'm wondering now is how the game of life would work if it was modified for a 3D space. For instance, what about if you played the Game of Life on a geodesic sphere? Of course, you'd be working with triangles instead of squares, so you'd have to tweak the rules. And there's different sizes for the geodesic sphere that you could use too... Hmm... You wouldn't be able to make an endless glider gun in this because it would wrap around. So I wonder if that means that all potential starting configurations would have stable end states (or a repeating loop). I think this would be really interesting to simulate. ﻿
