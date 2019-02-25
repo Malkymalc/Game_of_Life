@@ -74,19 +74,20 @@ function cellCount(){
   }, 0);
 }
 
-function runGame(cycles = 100){
+function runGame(cycles){
   if(!play){
     togglePlay();
-    let cycleCount = cycles;
+    let cycleCount = (!cycles) ? Infinity : cycles;
+
 
     let id = setInterval(function(){
       if(cycleCount>0 && play === true){
-          console.log(`Hello ${cycleCount}`);
-          console.log(`${cellCount()} cells alive`);
-          console.log(`${( cellCount()*100 / (grid[0].length * grid.length) )} % of cells alive`);
+          // console.log(`Hello ${cycleCount}`);
+          // console.log(`${cellCount()} cells alive`);
+          // console.log(`${( cellCount()*100 / (grid[0].length * grid.length) )} % of cells alive`);
           updateDOMGrid();
           grid = getNewGrid();
-          // messageBar.innerHTML = `Cycle ${cycleCount} of ${cycles}`;
+          console.log(`Cycle ${cycleCount} of ${cycles}`);
           cycleCount -= 1;
       } else {
           clearInterval(id);
