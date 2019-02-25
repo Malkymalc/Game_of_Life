@@ -117,6 +117,7 @@ function updateGrid() {
 
 // ========= OUTPUT ========= //
 function renderDOMGrid(grid){
+  console.log(' in renderDOMGrid');
   const world = document.getElementById('world');
   const fragment = document.createDocumentFragment();
   grid.forEach(function(row, rowIndex, grid){
@@ -331,4 +332,4 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-So, with his game of life, you can do cool things like make glider guns. BUT what I'm wondering now is how the game of life would work if it was modified for a 3D space. For instance, what about if you played the Game of Life on a geodesic sphere? Of course, you'd be working with triangles instead of squares, so you'd have to tweak the rules. And there's different sizes for the geodesic sphere that you could use too... Hmm... You wouldn't be able to make an endless glider gun in this because it would wrap around. So I wonder if that means that all potential starting configurations would have stable end states (or a repeating loop). I think this would be really interesting to simulate. ﻿
+// So, with his game of life, you can do cool things like make glider guns. BUT what I'm wondering now is how the game of life would work if it was modified for a 3D space. For instance, what about if you played the Game of Life on a geodesic sphere? Of course, you'd be working with triangles instead of squares, so you'd have to tweak the rules. And there's different sizes for the geodesic sphere that you could use too... Hmm... You wouldn't be able to make an endless glider gun in this because it would wrap around. So I wonder if that means that all potential starting configurations would have stable end states (or a repeating loop). I think this would be really interesting to simulate. ﻿
